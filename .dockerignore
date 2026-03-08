@@ -1,0 +1,10 @@
+.git
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb
+MNIST/
+hw_mnist_data_dict.npy
+submission_dict_mnist_task_1.json
