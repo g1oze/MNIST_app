@@ -5,3 +5,4 @@
 - app.py
 - model.py
 - Docekrfile
+- requirements.txt
