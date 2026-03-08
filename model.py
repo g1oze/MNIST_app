@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from torch import nn
+from collections import OrderedDict
 
 
 class Predictor:
@@ -12,9 +13,13 @@ class Predictor:
     @staticmethod
     def _build_model() -> nn.Module:
         return nn.Sequential(
-            nn.Linear(28 * 28, 128),
-            nn.Linear(128, 128),
-            nn.Linear(128, 10),
+            OrderedDict(
+                [
+                    ("l1", nn.Linear(28 * 28, 128)),
+                    ("l2", nn.Linear(128, 128)),
+                    ("l3", nn.Linear(128, 10)),
+                ]
+            )
         )
 
     def _load_weights(self) -> None:

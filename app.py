@@ -1,5 +1,6 @@
 import numpy as np
 import streamlit as st
+from PIL import Image
 
 from model import Predictor
 from streamlit_drawable_canvas import st_canvas
@@ -73,7 +74,9 @@ def main() -> None:
         if canvas_result.image_data is not None:
             rgba = canvas_result.image_data
             grayscale = rgba[:, :, 0].astype(np.float32) / 255.0
-            pooled = grayscale.reshape(28, 10, 28, 10).mean(axis=(1, 3))
+            grayscale_uint8 = np.clip(grayscale * 255.0, 0, 255).astype(np.uint8)
+            resized = Image.fromarray(grayscale_uint8).resize((28, 28), Image.Resampling.BILINEAR)
+            pooled = np.asarray(resized, dtype=np.float32) / 255.0
             drawn_input = pooled.reshape(1, 784).astype(np.float32)
             st.image(pooled, caption="Предобработанное изображение 28x28", clamp=True, width=180)
     else:
